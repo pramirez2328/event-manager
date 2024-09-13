@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app.routes';
 import { AppComponent } from './app.component';
 import { EventListComponent } from './components/event-list/event-list.component';
-import { EventDetailsComponent } from './components/event-details/event-details.component';
+import { EventDetailsComponent } from './components/event-calendar/event-calendar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 
