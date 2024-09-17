@@ -1,0 +1,16 @@
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.7rem;
+}
+
+.heart {
+  color: red;
+  font-size: 1rem;
+}
+
+.autor {
+  font-family: cursive;
+  font-weight: bold;
+  font-size: 0.8rem;
+}

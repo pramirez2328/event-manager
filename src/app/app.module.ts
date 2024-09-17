@@ -3,21 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app.routes';
 import { AppComponent } from './app.component';
 import { EventListComponent } from './components/event-list/event-list.component';
-import { EventDetailsComponent } from './components/event-calendar/event-calendar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FullCalendarModule,
     EventListComponent,
-    EventDetailsComponent,
     HeaderComponent,
     FooterComponent,
+    CalendarComponent,
+    AppComponent,
   ],
   providers: [],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}

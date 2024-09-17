@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { EventListComponent } from './components/event-list/event-list.component';
-import { EventCalendarComponent } from './components/event-calendar/event-calendar.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +11,8 @@ import { EventCalendarComponent } from './components/event-calendar/event-calend
     FooterComponent,
     HeaderComponent,
     EventListComponent,
-    EventCalendarComponent,
-  ], // Import all used components here
+    CalendarComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
