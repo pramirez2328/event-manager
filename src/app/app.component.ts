@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
+import { Router, RouterModule } from '@angular/router'; // Import Router and RouterModule
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { EventListComponent } from './components/event-list/event-list.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +9,22 @@ import { CalendarComponent } from './components/calendar/calendar.component';
   imports: [
     FooterComponent,
     HeaderComponent,
-    EventListComponent,
-    CalendarComponent,
+    RouterModule, // Add RouterModule to access routing features
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {}
+export class AppComponent {
+  showCalendar: boolean = true;
+
+  constructor(private router: Router) {} // Inject Router service
+
+  toggleView() {
+    this.showCalendar = !this.showCalendar;
+    if (this.showCalendar) {
+      this.router.navigate(['/events/calendar']); // Navigate to calendar route
+    } else {
+      this.router.navigate(['/events/list']); // Navigate to event list route
+    }
+  }
+}

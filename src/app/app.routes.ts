@@ -4,9 +4,9 @@ import { EventListComponent } from './components/event-list/event-list.component
 import { CalendarComponent } from './components/calendar/calendar.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/events', pathMatch: 'full' },
-  { path: 'events', component: EventListComponent },
-  { path: 'event/:id', component: CalendarComponent },
+  { path: '', redirectTo: '/events/list', pathMatch: 'full' },
+  { path: 'events/list', component: EventListComponent },
+  { path: 'events/calendar', component: CalendarComponent },
 ];
 
 @NgModule({

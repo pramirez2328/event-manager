@@ -1,0 +1,5 @@
+::ng-deep .fc-toolbar-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #0076fc;
+}
