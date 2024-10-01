@@ -2,53 +2,59 @@ import { Component, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import { Router } from '@angular/router';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction'; // Import the interaction plugin
-import { EventFormComponent } from '../event-form/event-form.component';
+import { EventService } from '../../services/event.service'; // Inject EventService
+import interactionPlugin from '@fullcalendar/interaction';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule for directives
-import { events } from '../../../util/events';
+import { CommonModule } from '@angular/common';
+import { events } from '../../../util/events'; // Import the events data
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css'],
-  imports: [
-    FullCalendarModule,
-    EventFormComponent,
-    CommonModule, // Import CommonModule for ngIf and other directives
-  ],
+  imports: [FullCalendarModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class CalendarComponent implements OnInit {
+  selectedDate: string = '';
   calendarOptions: CalendarOptions = {
-    plugins: [dayGridPlugin, interactionPlugin], // Add interactionPlugin here
+    plugins: [dayGridPlugin, interactionPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
       right: 'dayGridMonth,dayGridWeek,dayGridDay',
     },
-    events: [],
-    dateClick: this.handleDateClick.bind(this), // This will now work with interactionPlugin
+    events: [], // Initialize with an empty array
+    dateClick: this.handleDateClick.bind(this),
   };
 
-  selectedDate: string = ''; // Store the clicked date
-
-  constructor(private router: Router) {}
+  constructor(private router: Router, private eventService: EventService) {}
 
   ngOnInit(): void {
-    // Map your custom events to FullCalendar's event format
-    this.calendarOptions.events = events.map((event) => ({
+    this.loadEvents(); // Load the events initially
+  }
+
+  // Method to load events from the EventService and update the calendar
+  loadEvents(): void {
+    const existingEvents = events.map((event) => ({
       title: event.title,
-      date: event.date, // Use the date directly from the event object
+      date: event.date, // FullCalendar requires ISO8601 date strings (e.g., 'YYYY-MM-DD')
     }));
+
+    // Merge events from the service, which includes any newly added ones
+    const allEvents = [...existingEvents, ...this.eventService.getEvents()];
+
+    // Update the calendarOptions with all events
+    this.calendarOptions.events = allEvents;
   }
 
   // Method to handle date clicks
   handleDateClick(arg: any): void {
-    this.selectedDate = arg.dateStr; // Set the clicked date
-    this.router.navigate(['/events/form']); // Navigate to the form route
+    this.router.navigate(['/events/form'], {
+      queryParams: { date: arg.dateStr },
+    });
   }
 }

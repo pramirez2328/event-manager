@@ -5,6 +5,8 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { EventService } from '../../services/event.service'; // Import the EventService
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -16,28 +18,46 @@ import { CommonModule } from '@angular/common';
 })
 export class EventFormComponent implements OnInit {
   eventForm: FormGroup;
+  selectedDate: string = '';
 
-  constructor(private fb: FormBuilder) {
-    // Initialize the form with default values
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private eventService: EventService // Inject the EventService
+  ) {
     this.eventForm = this.fb.group({
       title: ['', Validators.required],
-      numberOfPeople: [1, Validators.required], // This can be further expanded
-      emails: ['', Validators.required], // This can be further expanded
+      numberOfPeople: [1, Validators.required],
+      emails: ['', Validators.required],
       location: ['', Validators.required],
       description: ['', Validators.required],
-      date: [''], // This field will be pre-filled with the clicked date
+      date: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
     // Inject the clicked date into the form
+    this.route.queryParams.subscribe((params) => {
+      if (params['date']) {
+        this.selectedDate = params['date'];
+        this.eventForm.patchValue({ date: this.selectedDate });
+      }
+    });
   }
 
   // Submit the form data
   onSubmit(): void {
     if (this.eventForm.valid) {
-      console.log('Form submitted', this.eventForm.value);
-      // You can handle the form submission here (e.g., emit event, save data)
+      // Add the event to the EventService
+      const newEvent = {
+        title: this.eventForm.value.title,
+        date: this.eventForm.value.date,
+      };
+      this.eventService.addEvent(newEvent);
+
+      // Navigate back to the calendar
+      this.router.navigate(['/events/calendar']);
     }
   }
 }

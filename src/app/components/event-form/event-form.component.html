@@ -16,15 +16,12 @@
       formControlName="numberOfPeople"
       type="number"
       min="1"
-      step="1"
       class="form-control"
     />
   </div>
 
   <div class="mb-3">
-    <label for="emails" class="form-label"
-      >Emails (separate using commas):</label
-    >
+    <label for="emails" class="form-label">Emails:</label>
     <textarea
       id="emails"
       formControlName="emails"
@@ -49,6 +46,11 @@
       formControlName="description"
       class="form-control"
     ></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="date" class="form-label">Date:</label>
+    <input id="date" formControlName="date" type="text" class="form-control" />
   </div>
 
   <button type="submit" [disabled]="eventForm.invalid" class="btn btn-primary">
