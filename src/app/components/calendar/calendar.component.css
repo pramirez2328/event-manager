@@ -1,5 +1,9 @@
 ::ng-deep .fc-toolbar-title {
   font-size: 1.5em;
   font-weight: bold;
-  color: #0076fc;
+  color: #000000;
+}
+
+::ng-deep .fc-scrollgrid-section-body {
+  cursor: pointer;
 }

@@ -19,6 +19,8 @@ import { CommonModule } from '@angular/common';
 export class EventFormComponent implements OnInit {
   eventForm: FormGroup;
   selectedDate: string = '';
+  isEditMode: boolean = false;
+  eventId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -37,9 +39,26 @@ export class EventFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Inject the clicked date into the form
     this.route.queryParams.subscribe((params) => {
-      if (params['date']) {
+      if (params['id']) {
+        // Editing an existing event
+        this.isEditMode = true;
+        this.eventId = params['id'];
+
+        // Load the existing event data
+        const existingEvent = this.eventService.getEventById(this.eventId);
+        if (existingEvent) {
+          this.eventForm.patchValue({
+            title: existingEvent.title,
+            numberOfPeople: existingEvent.numberOfPeople,
+            emails: existingEvent.emails,
+            location: existingEvent.location,
+            description: existingEvent.description,
+            date: existingEvent.date,
+          });
+        }
+      } else if (params['date']) {
+        // Creating a new event with the selected date
         this.selectedDate = params['date'];
         this.eventForm.patchValue({ date: this.selectedDate });
       }
@@ -49,12 +68,18 @@ export class EventFormComponent implements OnInit {
   // Submit the form data
   onSubmit(): void {
     if (this.eventForm.valid) {
-      // Add the event to the EventService
-      const newEvent = {
-        title: this.eventForm.value.title,
-        date: this.eventForm.value.date,
-      };
-      this.eventService.addEvent(newEvent);
+      const formData = this.eventForm.value;
+
+      if (this.isEditMode && this.eventId) {
+        // Update existing event
+        this.eventService.updateEvent(this.eventId, formData);
+      } else {
+        // Add a new event
+        const newEvent = {
+          ...formData,
+        };
+        this.eventService.addEvent(newEvent);
+      }
 
       // Navigate back to the calendar
       this.router.navigate(['/events/calendar']);
