@@ -21,7 +21,8 @@ export class EventFormComponent implements OnInit {
     // Initialize the form with default values
     this.eventForm = this.fb.group({
       title: ['', Validators.required],
-      people: ['', Validators.required], // This can be further expanded
+      numberOfPeople: [1, Validators.required], // This can be further expanded
+      emails: ['', Validators.required], // This can be further expanded
       location: ['', Validators.required],
       description: ['', Validators.required],
       date: [''], // This field will be pre-filled with the clicked date

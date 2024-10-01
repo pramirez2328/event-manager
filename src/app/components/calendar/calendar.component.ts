@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
+import { Router } from '@angular/router';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction'; // Import the interaction plugin
 import { EventFormComponent } from '../event-form/event-form.component';
@@ -35,7 +36,7 @@ export class CalendarComponent implements OnInit {
 
   selectedDate: string = ''; // Store the clicked date
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     // Map your custom events to FullCalendar's event format
@@ -48,6 +49,6 @@ export class CalendarComponent implements OnInit {
   // Method to handle date clicks
   handleDateClick(arg: any): void {
     this.selectedDate = arg.dateStr; // Set the clicked date
-    console.log('Selected Date: ', this.selectedDate);
+    this.router.navigate(['/events/form']); // Navigate to the form route
   }
 }
