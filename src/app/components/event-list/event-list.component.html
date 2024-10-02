@@ -1,1 +1,37 @@
-<p>event-list works!</p>
+<div *ngIf="events && events.length; else noEvents" class="container mt-4">
+  <h2 class="mb-3">Event List</h2>
+  <div class="accordion" id="eventAccordion">
+    <div *ngFor="let event of events" class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ event.id }}">
+        <button
+          class="accordion-button"
+          type="button"
+          [class.collapsed]="collapsedStates[event.id]"
+          (click)="toggleCollapse(event.id)"
+          [attr.aria-expanded]="!collapsedStates[event.id]"
+          [attr.aria-controls]="'collapse' + event.id"
+        >
+          {{ event.title }}
+        </button>
+      </h2>
+      <div
+        [id]="'collapse' + event.id"
+        class="accordion-collapse collapse"
+        [class.show]="!collapsedStates[event.id]"
+        [attr.aria-labelledby]="'heading' + event.id"
+      >
+        <div class="accordion-body">
+          <p><strong>Date:</strong> {{ event.date }}</p>
+          <p><strong>Number of People:</strong> {{ event.numberOfPeople }}</p>
+          <p><strong>Emails:</strong> {{ event.emails }}</p>
+          <p><strong>Location:</strong> {{ event.location }}</p>
+          <p><strong>Description:</strong> {{ event.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noEvents>
+  <p class="text-center mt-4">No events available.</p>
+</ng-template>

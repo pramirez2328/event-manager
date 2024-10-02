@@ -3,7 +3,7 @@ import { generateUniqueId } from './generateUniqueId';
 export const events = [
   {
     id: generateUniqueId(),
-    date: '2024-09-09',
+    date: '2024-10-02',
     title: 'Company Picnic',
     numberOfPeople: 2,
     emails: 'john.doe@example.com, jane.smith@example.com', // Extracted emails
@@ -12,7 +12,7 @@ export const events = [
   },
   {
     id: generateUniqueId(),
-    date: '2024-09-10',
+    date: '2024-10-07',
     title: 'Team Meeting',
     numberOfPeople: 2,
     emails: 'alice.johnson@example.com, bob.brown@example.com', // Extracted emails
@@ -21,7 +21,7 @@ export const events = [
   },
   {
     id: generateUniqueId(),
-    date: '2024-09-13',
+    date: '2024-10-17',
     title: 'Product Launch',
     numberOfPeople: 2,
     emails: 'charlie.davis@example.com, dana.lee@example.com', // Extracted emails
@@ -30,7 +30,7 @@ export const events = [
   },
   {
     id: generateUniqueId(),
-    date: '2024-09-15',
+    date: '2024-10-20',
     title: 'Sales Workshop',
     numberOfPeople: 2,
     emails: 'eve.harris@example.com, frank.wilson@example.com', // Extracted emails

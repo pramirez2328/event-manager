@@ -8,8 +8,15 @@
         type="search"
         placeholder="Search"
         aria-label="Search"
+        [(ngModel)]="searchQuery"
       />
-      <button class="btn btn-outline-primary" type="submit">Search</button>
+      <button
+        class="btn btn-outline-primary"
+        type="submit"
+        (click)="onSearch()"
+      >
+        Search
+      </button>
     </div>
   </div>
 </nav>
