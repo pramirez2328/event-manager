@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { SearchService } from '../app/services/share.service'; // Import SearchService
+import { SearchService } from './services/search.service';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +13,10 @@ import { SearchService } from '../app/services/share.service'; // Import SearchS
 })
 export class AppComponent {
   showCalendar: boolean = false;
+  foundEvent: any; // To store the found event
 
   constructor(private router: Router, private searchService: SearchService) {}
 
-  // Toggle between calendar and event list view
   toggleView() {
     this.showCalendar = !this.showCalendar;
     if (this.showCalendar) {
@@ -26,8 +26,9 @@ export class AppComponent {
     }
   }
 
-  // Add this method to handle the search query from the header
+  // Handle the search query from the header
   onSearch(query: string) {
-    this.searchService.updateSearchQuery(query); // Update the search query in the service
+    this.searchService.updateSearchQuery(query);
+    this.foundEvent = this.searchService.searchEventByTitle(query); // Search for the event
   }
 }
