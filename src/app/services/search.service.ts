@@ -15,16 +15,22 @@ export class SearchService {
 
   searchEventByTitle(title: string): any {
     const events = JSON.parse(localStorage.getItem('events') || '[]');
-    const foundEvent = events.find(
-      (event: any) => event.title.toLowerCase() === title.toLowerCase()
-    );
 
-    if (foundEvent) {
-      console.log('Event found:', foundEvent);
-    } else {
-      console.log('No event found with the title:', title);
+    if (title.length < 3) {
+      console.log('Please enter at least 3 characters.');
+      return [];
     }
 
-    return foundEvent;
+    const foundEvents = events.filter((event: any) =>
+      event.title.toLowerCase().includes(title.toLowerCase())
+    );
+
+    if (foundEvents.length > 0) {
+      console.log('Matching events found:', foundEvents);
+    } else {
+      console.log('No events found containing the title:', title);
+    }
+
+    return foundEvents;
   }
 }

@@ -8,6 +8,7 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { EventService } from '../../services/event.service'; // Import the EventService
 import { CommonModule } from '@angular/common';
+import { generateUniqueId } from '../../../util/generateUniqueId'; // Import the unique ID generator
 
 @Component({
   selector: 'app-event-form',
@@ -76,6 +77,7 @@ export class EventFormComponent implements OnInit {
       } else {
         // Add a new event
         const newEvent = {
+          id: generateUniqueId(), // Use the unique ID generator
           ...formData,
         };
         this.eventService.addEvent(newEvent);
