@@ -42,8 +42,13 @@ export class EventService {
   }
 
   // Get all events
-  getEvents() {
-    return this.events;
+  getEvents(): Array<any> {
+    const savedEvents = localStorage.getItem(this.eventsKey);
+    if (savedEvents) {
+      this.events = JSON.parse(savedEvents);
+      return this.events;
+    }
+    return [];
   }
 
   // Add a new event and save it to localStorage
@@ -79,6 +84,20 @@ export class EventService {
       this.events[eventIndex] = { ...this.events[eventIndex], ...updatedEvent };
       this.saveEventsToStorage(); // Save updated events to localStorage
     }
+  }
+
+  // Save updated event list to localStorage
+  saveEvents(events: Array<any>): void {
+    localStorage.setItem(this.eventsKey, JSON.stringify(events));
+  }
+
+  // Delete an event from localStorage and the local array
+  deleteEventById(eventId: string): void {
+    const events = this.getEvents(); // Fetch current events
+    const updatedEvents = events.filter((event) => event.id !== eventId); // Remove the event by id
+
+    // Save the updated list back to localStorage
+    this.saveEvents(updatedEvents);
   }
 
   // Generate a unique ID for events

@@ -44,6 +44,11 @@
             <p><strong>Date:</strong> {{ event.date }}</p>
             <p><strong>Location:</strong> {{ event.location }}</p>
             <p><strong>Description:</strong> {{ event.description }}</p>
+
+            <!-- Delete button for each event -->
+            <button class="btn btn-danger" (click)="deleteEvent(event.id)">
+              Delete
+            </button>
           </div>
         </div>
       </div>
@@ -78,6 +83,11 @@
               <p><strong>Date:</strong> {{ event.date }}</p>
               <p><strong>Location:</strong> {{ event.location }}</p>
               <p><strong>Description:</strong> {{ event.description }}</p>
+
+              <!-- Delete button for each event in search results -->
+              <button class="btn btn-danger" (click)="deleteEvent(event.id)">
+                Delete
+              </button>
             </div>
           </div>
         </div>

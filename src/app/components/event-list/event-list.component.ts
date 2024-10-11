@@ -66,6 +66,20 @@ export class EventListComponent implements OnInit, OnChanges {
     }
   }
 
+  deleteEvent(eventId: string): void {
+    // Call the EventService to delete the event
+    this.eventService.deleteEventById(eventId);
+
+    // Remove the deleted event from the local list of events
+    this.events = this.events.filter((event) => event.id !== eventId);
+
+    // Update the number of events
+    this.numberOfEvents = this.events.length;
+
+    // Optionally reset the collapsed states
+    delete this.collapsedStates[eventId];
+  }
+
   clearSearch(): void {
     this.loadEvents(); // Reload all events
     this.isSearchActive = false; // Reset search active flag
