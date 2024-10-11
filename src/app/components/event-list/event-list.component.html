@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div>
   <!-- Clear Button, visible only when search is active -->
   <div class="d-flex justify-content-end mb-3">
     <button
@@ -11,8 +11,15 @@
   </div>
 
   <!-- Full Event List (Only show when search is not active) -->
-  <div *ngIf="!isSearchActive && events.length > 0" class="mt-4">
-    <h2 class="mb-3">Event List</h2>
+  <div *ngIf="!isSearchActive && events.length > 0">
+    <div class="d-flex justify-content-between">
+      <h3 class="mb-3 text-muted">Event List</h3>
+      <h6 class="text-muted mb-4">
+        You have
+        <span class="text-primary numberOfEvents">{{ numberOfEvents }}</span>
+        events
+      </h6>
+    </div>
     <div class="accordion" id="eventAccordion">
       <div *ngFor="let event of events" class="accordion-item">
         <h2 class="accordion-header" id="heading{{ event.id }}">

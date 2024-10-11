@@ -30,7 +30,7 @@ export class EventListComponent implements OnInit, OnChanges {
 
   isSearchActive: boolean = false; // Flag to indicate search activity
   collapsedStates: { [key: string]: boolean } = {}; // Track collapse state for each event
-
+  numberOfEvents: number = 0;
   constructor(
     private eventService: EventService,
     private searchService: SearchService
@@ -55,12 +55,12 @@ export class EventListComponent implements OnInit, OnChanges {
 
   loadEvents(): void {
     this.events = this.eventService.getEvents();
+    this.numberOfEvents = this.events.length;
     this.events.forEach((event) => (this.collapsedStates[event.id] = true)); // Initialize collapse states
   }
 
   searchEvents(): void {
     this.events = this.searchService.searchEventByTitle(this.searchTerm);
-    console.log('Search events:', this.events);
     if (this.events.length > 0) {
       this.isSearchActive = true; // Set search active
     }

@@ -1,0 +1,10 @@
+.recipient {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 1.5rem;
+  border-radius: 7px;
+}
+
+.form-label {
+  font-weight: bold;
+}

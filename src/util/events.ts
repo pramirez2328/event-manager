@@ -1,38 +1,5 @@
 export const EVENTS = [
   {
-    id: 'CS701:20241008215442821127',
-    date: '2024-10-07',
-    title: 'Marketing Seminar',
-    recipients: [
-      { name: 'Rebeca Ramirez', email: 'rramirez52019@gmail.com' },
-      { name: 'Alice Johnson', email: 'alice.johnson@example.com' },
-    ],
-    location: '123 W Main St, Chicago, IL',
-    description: 'Seminar on the latest trends in digital marketing.',
-  },
-  {
-    id: 'CS701:20241008215442821128',
-    date: '2024-10-10',
-    title: 'Leadership Workshop',
-    recipients: [
-      { name: 'Rebeca Ramirez', email: 'rramirez52019@gmail.com' },
-      { name: 'Mark Taylor', email: 'mark.taylor@example.com' },
-    ],
-    location: '456 E Randolph St, Chicago, IL',
-    description: 'Workshop focused on leadership skills for managers.',
-  },
-  {
-    id: 'CS701:20241008215442821129',
-    date: '2024-10-12',
-    title: 'Team Building Event',
-    recipients: [
-      { name: 'Rebeca Ramirez', email: 'rramirez52019@gmail.com' },
-      { name: 'Emma Williams', email: 'emma.williams@example.com' },
-    ],
-    location: '789 N Wabash Ave, Chicago, IL',
-    description: 'Team building activities for the sales team.',
-  },
-  {
     id: 'CS701:20241008215442821130',
     date: '2024-10-15',
     title: 'Customer Engagement Workshop',
@@ -42,17 +9,6 @@ export const EVENTS = [
     ],
     location: '111 S Michigan Ave, Chicago, IL',
     description: 'Workshop on strategies for engaging with customers.',
-  },
-  {
-    id: 'CS701:20241008215442821132',
-    date: '2024-10-20',
-    title: 'Product Launch',
-    recipients: [
-      { name: 'Rebeca Ramirez', email: 'rramirez52019@gmail.com' },
-      { name: 'Daniel Lee', email: 'daniel.lee@example.com' },
-    ],
-    location: '300 E Monroe St, Chicago, IL',
-    description: 'Launch event for our new product line.',
   },
   {
     id: 'CS701:20241008215442821133',

@@ -1,21 +1,22 @@
-<app-header (searchEvent)="onSearch($event)"></app-header>
+<div class="main-container">
+  <app-header (searchEvent)="onSearch($event)"></app-header>
 
-<div class="container">
-  <main class="mt-5">
-    <!-- Toggle button to switch between Event List and Calendar -->
-    <button (click)="toggleView()" class="btn btn-primary mb-4">
-      {{ showCalendar ? "Show Event List" : "Show Calendar" }}
-    </button>
+  <div class="container">
+    <main class="mt-5">
+      <!-- Toggle button to switch between Event List and Calendar -->
+      <button (click)="toggleView()" class="btn btn-primary mb-4">
+        {{ showCalendar ? "Show Event List" : "Show Calendar" }}
+      </button>
 
-    <!-- Conditionally render Event List or Calendar -->
-    <div *ngIf="!showCalendar; else calendarView">
-      <app-event-list [searchTerm]="searchQuery"></app-event-list>
-    </div>
+      <!-- Conditionally render Event List or Calendar -->
+      <div *ngIf="!showCalendar; else calendarView">
+        <app-event-list [searchTerm]="searchQuery"></app-event-list>
+      </div>
 
-    <ng-template #calendarView>
-      <router-outlet></router-outlet>
-    </ng-template>
-  </main>
-
+      <ng-template #calendarView>
+        <router-outlet></router-outlet>
+      </ng-template>
+    </main>
+  </div>
   <app-footer></app-footer>
 </div>
