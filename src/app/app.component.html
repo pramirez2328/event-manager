@@ -2,11 +2,20 @@
 
 <div class="container">
   <main class="mt-5">
+    <!-- Toggle button to switch between Event List and Calendar -->
     <button (click)="toggleView()" class="btn btn-primary mb-4">
       {{ showCalendar ? "Show Event List" : "Show Calendar" }}
     </button>
-    <router-outlet></router-outlet>
-    <!-- Display event list or calendar here -->
+
+    <!-- Conditionally render Event List or Calendar -->
+    <div *ngIf="!showCalendar; else calendarView">
+      <app-event-list [searchTerm]="searchQuery"></app-event-list>
+    </div>
+
+    <ng-template #calendarView>
+      <router-outlet></router-outlet>
+    </ng-template>
   </main>
+
   <app-footer></app-footer>
 </div>

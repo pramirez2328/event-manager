@@ -1,4 +1,5 @@
-<form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+<form id="eventForm" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+  <!-- Event Title -->
   <div class="mb-3">
     <label for="title" class="form-label">Event Title:</label>
     <input
@@ -6,29 +7,11 @@
       formControlName="title"
       type="text"
       class="form-control"
+      placeholder="Enter event title"
     />
   </div>
 
-  <div class="mb-3">
-    <label for="numberOfPeople" class="form-label">Number of People:</label>
-    <input
-      id="numberOfPeople"
-      formControlName="numberOfPeople"
-      type="number"
-      min="1"
-      class="form-control"
-    />
-  </div>
-
-  <div class="mb-3">
-    <label for="emails" class="form-label">Emails:</label>
-    <textarea
-      id="emails"
-      formControlName="emails"
-      class="form-control"
-    ></textarea>
-  </div>
-
+  <!-- Event Location -->
   <div class="mb-3">
     <label for="location" class="form-label">Location:</label>
     <input
@@ -36,24 +19,60 @@
       formControlName="location"
       type="text"
       class="form-control"
+      placeholder="Enter event location"
     />
   </div>
 
+  <!-- Event Description -->
   <div class="mb-3">
     <label for="description" class="form-label">Description:</label>
     <textarea
       id="description"
       formControlName="description"
       class="form-control"
+      placeholder="Enter event description"
     ></textarea>
   </div>
 
-  <div class="mb-3">
-    <label for="date" class="form-label">Date:</label>
-    <input id="date" formControlName="date" type="text" class="form-control" />
+  <!-- Recipients Form Array -->
+  <div formArrayName="recipients">
+    <div
+      *ngFor="let recipient of recipients.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <div class="mb-3">
+        <label for="name-{{ i }}" class="form-label">Recipient Name:</label>
+        <input
+          id="name-{{ i }}"
+          formControlName="name"
+          type="text"
+          class="form-control"
+          placeholder="Enter recipient's name"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="email-{{ i }}" class="form-label">Recipient Email:</label>
+        <input
+          id="email-{{ i }}"
+          formControlName="email"
+          type="email"
+          class="form-control"
+          placeholder="Enter recipient's email"
+        />
+      </div>
+
+      <button type="button" (click)="removeRecipient(i)" class="btn btn-danger">
+        Remove Recipient
+      </button>
+    </div>
   </div>
 
+  <button type="button" (click)="addRecipient()" class="btn btn-secondary">
+    Add Another Recipient
+  </button>
+
   <button type="submit" [disabled]="eventForm.invalid" class="btn btn-primary">
-    Add Event
+    Send Invitations
   </button>
 </form>

@@ -40,12 +40,19 @@ export class CalendarComponent implements OnInit {
   // Method to load events from the EventService and update the calendar
   loadEvents(): void {
     const allEvents = this.eventService.getEvents(); // Fetch events from the service
-    // Update the calendarOptions with all events
-    this.calendarOptions.events = allEvents.map((event) => ({
+
+    // Map the event data to FullCalendar's format
+    const mappedEvents = allEvents.map((event) => ({
       id: event.id,
       title: event.title,
-      date: event.date,
+      date: event.date, // Assuming `date` is in YYYY-MM-DD format
     }));
+
+    // Update calendarOptions with new events
+    this.calendarOptions = {
+      ...this.calendarOptions, // Keep existing options
+      events: mappedEvents, // Update events array
+    };
   }
 
   // Method to handle date clicks (create a new event)
@@ -57,17 +64,11 @@ export class CalendarComponent implements OnInit {
 
   // Method to handle event clicks (edit an existing event)
   handleEventClick(info: any): void {
-    const eventId = info.event.id; // Get the event ID
-    const eventTitle = info.event.title;
-    const eventDate = info.event.startStr;
+    const eventId = info.event.id;
 
     // Pass the event details as query parameters to the form for editing
     this.router.navigate(['/events/form'], {
-      queryParams: {
-        id: eventId, // Ensure the id is passed
-        title: eventTitle,
-        date: eventDate,
-      },
+      queryParams: { id: eventId }, // Ensure the id is passed
     });
   }
 }

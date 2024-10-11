@@ -14,7 +14,7 @@ export class SearchService {
   }
 
   searchEventByTitle(title: string): any {
-    const events = JSON.parse(localStorage.getItem('events') || '[]');
+    const events = JSON.parse(localStorage.getItem('EXISTING_EVENTS') || '[]');
 
     if (title.length < 3) {
       console.log('Please enter at least 3 characters.');

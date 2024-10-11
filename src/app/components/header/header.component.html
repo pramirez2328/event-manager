@@ -9,6 +9,7 @@
         placeholder="Search"
         aria-label="Search"
         [(ngModel)]="searchQuery"
+        (input)="onSearch()"
       />
       <button
         class="btn btn-outline-primary"

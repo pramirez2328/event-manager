@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { events as preloadedEvents } from '../../../src/util/events'; // Static events
+import { EVENTS as preloadedEvents } from '../../../src/util/events'; // Static events
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventService {
-  private eventsKey = 'events';
+  private eventsKey = 'EXISTING_EVENTS';
 
   constructor() {
     this.loadEventsFromStorage(); // Load events from localStorage when service is initialized
@@ -15,8 +15,7 @@ export class EventService {
     id: string;
     title: string;
     date: string;
-    numberOfPeople: number;
-    emails: string;
+    recipients: Array<{ name: string; email: string }>;
     location: string;
     description: string;
   }> = [];
@@ -51,8 +50,7 @@ export class EventService {
   addEvent(event: {
     title: string;
     date: string;
-    numberOfPeople: number;
-    emails: string;
+    recipients: Array<{ name: string; email: string }>;
     location: string;
     description: string;
   }) {
@@ -70,8 +68,7 @@ export class EventService {
     updatedEvent: {
       title: string;
       date: string;
-      numberOfPeople: number;
-      emails: string;
+      recipients: Array<{ name: string; email: string }>;
       location: string;
       description: string;
     }
