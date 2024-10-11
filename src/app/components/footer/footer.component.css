@@ -1,17 +1,23 @@
 .footer {
-  margin-top: 2rem;
-  text-align: center;
-  font-size: 0.7rem;
-  /* min-height: 100vh; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 0;
+}
+
+.footer > h6 {
+  margin: 0;
+  font-size: 0.65rem;
 }
 
 .heart {
   color: red;
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 .autor {
   font-family: cursive;
   font-weight: bold;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }

@@ -3,9 +3,24 @@
   font-family: "Lora", serif;
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
 .main-container {
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+}
+
+app-footer {
+  background-color: #f8f9fa;
+  text-align: center;
+  padding: 10px;
 }
