@@ -44,6 +44,14 @@
             <p><strong>Date:</strong> {{ event.date }}</p>
             <p><strong>Location:</strong> {{ event.location }}</p>
             <p><strong>Description:</strong> {{ event.description }}</p>
+            <p>
+              <strong>Recipients:</strong>
+              <span
+                *ngFor="let recipient of event.recipients; let isLast = last"
+              >
+                {{ recipient.name }}<span *ngIf="!isLast">, </span>
+              </span>
+            </p>
 
             <!-- Delete button for each event -->
             <button class="btn btn-danger" (click)="deleteEvent(event.id)">
@@ -81,8 +89,12 @@
           >
             <div class="accordion-body">
               <p><strong>Date:</strong> {{ event.date }}</p>
-              <p><strong>Location:</strong> {{ event.location }}</p>
               <p><strong>Description:</strong> {{ event.description }}</p>
+              <p><strong>Location:</strong> {{ event.location }}</p>
+              <p><strong>Recipients:</strong></p>
+              <div *ngFor="let recipient of event.recipients">
+                <p>{{ recipient.name }}</p>
+              </div>
 
               <!-- Delete button for each event in search results -->
               <button class="btn btn-danger" (click)="deleteEvent(event.id)">
