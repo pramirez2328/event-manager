@@ -58,6 +58,7 @@ export class EventService {
       id: this.generateUniqueId(),
       ...event,
     };
+
     this.events.push(newEvent);
     this.saveEventsToStorage(); // Save updated events to localStorage
   }

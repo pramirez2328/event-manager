@@ -1,4 +1,16 @@
 <form id="eventForm" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+  <!-- Event Date -->
+  <div class="mb-3">
+    <label for="date" class="form-label">Event Date:</label>
+    <input
+      id="date"
+      formControlName="date"
+      type="date"
+      class="form-control"
+      placeholder="Select event date"
+    />
+  </div>
+
   <!-- Event Title -->
   <div class="mb-3">
     <label for="title" class="form-label">Event Title:</label>

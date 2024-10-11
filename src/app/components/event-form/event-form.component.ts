@@ -35,6 +35,7 @@ export class EventFormComponent implements OnInit {
       location: ['', Validators.required], // Event location
       description: ['', Validators.required], // Event description
       recipients: this.fb.array([]), // Form array for multiple recipients
+      date: [null, Validators.required],
     });
   }
 
@@ -44,7 +45,13 @@ export class EventFormComponent implements OnInit {
     // Add initial recipient
     this.addRecipient();
 
+    // Check for the date query parameter and set it in the form
     this.route.queryParams.subscribe((params) => {
+      if (params['date']) {
+        // Assign the selected date to the form
+        this.eventForm.patchValue({ date: params['date'] });
+      }
+
       if (params['id']) {
         this.isEditMode = true;
         this.eventId = params['id'];
@@ -73,6 +80,17 @@ export class EventFormComponent implements OnInit {
   // Remove a recipient from the form
   removeRecipient(index: number): void {
     this.recipients.removeAt(index);
+  }
+
+  onDateSelected(selectedDate: Date): void {
+    const year = selectedDate.getFullYear();
+    const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0'); // Month starts from 0
+    const day = selectedDate.getDate().toString().padStart(2, '0');
+
+    const formattedDate = `${year}-${month}-${day}`;
+
+    // Set the date in the eventForm
+    this.eventForm.patchValue({ date: formattedDate });
   }
 
   onSubmit(): void {
