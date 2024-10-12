@@ -5,9 +5,11 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
+import { Router } from '@angular/router'; // Import Router for navigation
 import { EventService } from '../../services/event.service';
 import { SearchService } from '../../services/search.service';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -29,63 +31,71 @@ export class EventListComponent implements OnInit, OnChanges {
   }> = [];
 
   isSearchActive: boolean = false; // Flag to indicate search activity
-  collapsedStates: { [key: string]: boolean } = {}; // Track collapse state for each event
   numberOfEvents: number = 0;
+
   constructor(
     private eventService: EventService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private router: Router, // Inject Router to navigate programmatically
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    // if (!this.searchTerm || this.searchTerm.trim() === '') {
-    //   this.loadEvents(); // Load events only if no search term exists
-    // }
+    this.loadEvents(); // Load events on initialization
+    this.route.queryParams.subscribe((params) => {
+      this.searchTerm = params['searchTerm'] || '';
+      if (this.searchTerm && this.searchTerm.trim().length >= 3) {
+        this.searchEvents(); // Trigger the search immediately if query param exists
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Check if searchTerm has changed and if it should trigger search or clear
     if (changes['searchTerm']) {
-      if (this.searchTerm && this.searchTerm.trim().length >= 3) {
-        this.searchEvents(); // Trigger search if term is 3 or more characters
-      } else if (this.searchTerm.trim() === '') {
-        this.clearSearch(); // Clear the search and load all events
-      }
+      this.handleSearchTerm();
+    }
+  }
+
+  handleSearchTerm(): void {
+    if (this.searchTerm && this.searchTerm.trim().length >= 3) {
+      this.searchEvents(); // Trigger search if the term is 3 or more characters
+    } else if (this.searchTerm.trim() === '') {
+      this.clearSearch(); // Clear the search and load all events
     }
   }
 
   loadEvents(): void {
     this.events = this.eventService.getEvents();
     this.numberOfEvents = this.events.length;
-    this.events.forEach((event) => (this.collapsedStates[event.id] = true)); // Initialize collapse states
   }
 
   searchEvents(): void {
     this.events = this.searchService.searchEventByTitle(this.searchTerm);
-    if (this.events.length > 0) {
-      this.isSearchActive = true; // Set search active
-    }
+    this.isSearchActive = this.events.length > 0;
   }
 
   deleteEvent(eventId: string): void {
-    // Call the EventService to delete the event
     this.eventService.deleteEventById(eventId);
-
-    // Remove the deleted event from the local list of events
     this.events = this.events.filter((event) => event.id !== eventId);
-
-    // Update the number of events
     this.numberOfEvents = this.events.length;
+  }
 
-    // Optionally reset the collapsed states
-    delete this.collapsedStates[eventId];
+  updateEvent(eventId: string): void {
+    this.router.navigate(['/events/form'], { queryParams: { id: eventId } });
   }
 
   clearSearch(): void {
     this.loadEvents(); // Reload all events
+    this.searchTerm = ''; // Reset the search term
     this.isSearchActive = false; // Reset search active flag
   }
 
-  toggleCollapse(eventId: string): void {
-    this.collapsedStates[eventId] = !this.collapsedStates[eventId];
+  viewDetails(eventId: string): void {
+    this.router.navigate(['/events/list/', eventId]);
+  }
+
+  // Add the missing onSearchChange method
+  onSearchChange(): void {
+    this.handleSearchTerm(); // Trigger search logic whenever the search term changes
   }
 }

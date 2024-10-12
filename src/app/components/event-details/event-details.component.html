@@ -1,0 +1,21 @@
+<div *ngIf="event">
+  <h2>{{ event.title }}</h2>
+  <p><strong>Date:</strong> {{ event.date }}</p>
+  <p><strong>Location:</strong> {{ event.location }}</p>
+  <p><strong>Description:</strong> {{ event.description }}</p>
+
+  <h4>Recipients:</h4>
+  <ul>
+    <li *ngFor="let recipient of event.recipients">
+      {{ recipient.name }} ({{ recipient.email }})
+    </li>
+  </ul>
+
+  <button class="btn btn-primary" (click)="backToEvents()">
+    Back to Events
+  </button>
+</div>
+
+<div *ngIf="!event">
+  <p>No event found.</p>
+</div>

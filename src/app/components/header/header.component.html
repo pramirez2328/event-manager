@@ -1,23 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3 text-light">
   <div class="container-fluid">
     <h1 class="title">Event Manager</h1>
-
-    <div class="d-flex">
-      <input
-        class="form-control me-2"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-        [(ngModel)]="searchQuery"
-        (input)="onSearch()"
-      />
-      <button
-        class="btn btn-outline-primary"
-        type="submit"
-        (click)="onSearch()"
-      >
-        Search
-      </button>
-    </div>
+    <!-- Toggle button to switch between Event List and Calendar -->
+    <button (click)="toggleView()" class="btn btn-primary">
+      {{ showCalendar ? "Show Event List" : "Show Calendar" }}
+    </button>
   </div>
 </nav>

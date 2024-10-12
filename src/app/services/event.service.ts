@@ -26,7 +26,6 @@ export class EventService {
     if (savedEvents) {
       this.events = JSON.parse(savedEvents);
     } else {
-      // Save the static events to localStorage if it's the first app load
       this.events = preloadedEvents;
       this.saveEventsToStorage();
     }
@@ -38,7 +37,13 @@ export class EventService {
   }
 
   getEventById(id: string | null) {
-    return this.events.find((event) => event.id === id);
+    if (!id) {
+      return null;
+    }
+
+    const event = this.events.find((event) => event.id === id);
+    console.log('Event found:', event); // Log the found event or undefined
+    return event;
   }
 
   // Get all events

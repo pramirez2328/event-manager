@@ -1,19 +1,22 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [FormsModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  searchQuery: string = '';
+  showCalendar: boolean = false;
+  constructor(private router: Router) {}
 
-  @Output() searchEvent = new EventEmitter<string>(); // Emit search query to parent
-
-  onSearch() {
-    this.searchEvent.emit(this.searchQuery); // Emit the search query to the parent
+  toggleView() {
+    this.showCalendar = !this.showCalendar;
+    if (this.showCalendar) {
+      this.router.navigate(['/events/calendar']);
+    } else {
+      this.router.navigate(['/events/list']);
+    }
   }
 }

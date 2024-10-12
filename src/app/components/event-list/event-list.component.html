@@ -1,116 +1,72 @@
 <div>
-  <!-- Clear Button, visible only when search is active -->
-  <div class="d-flex justify-content-end mb-3">
-    <button
-      class="btn btn-secondary"
-      (click)="clearSearch()"
-      *ngIf="isSearchActive"
-    >
-      Clear
-    </button>
-  </div>
-
-  <!-- Full Event List (Only show when search is not active) -->
-  <div *ngIf="!isSearchActive && events.length > 0">
+  <!-- Event List (Show either all events or search results) -->
+  <div *ngIf="events.length > 0; else noEvents">
     <div class="d-flex justify-content-between">
-      <h3 class="mb-3 text-muted">Event List</h3>
+      <h3 class="mb-3 text-muted">
+        {{ isSearchActive ? "Search Results" : "Event List" }}
+      </h3>
       <h6 class="text-muted mb-4">
         You have
-        <span class="text-primary numberOfEvents">{{ numberOfEvents }}</span>
-        events
+        <span class="text-primary numberOfEvents">{{
+          isSearchActive ? events.length : numberOfEvents
+        }}</span>
+        {{ isSearchActive ? "matching events" : "events" }}
       </h6>
     </div>
-    <div class="accordion" id="eventAccordion">
-      <div *ngFor="let event of events" class="accordion-item">
-        <h2 class="accordion-header" id="heading{{ event.id }}">
-          <button
-            class="accordion-button"
-            type="button"
-            [class.collapsed]="collapsedStates[event.id]"
-            (click)="toggleCollapse(event.id)"
-            [attr.aria-expanded]="!collapsedStates[event.id]"
-            [attr.aria-controls]="'collapse' + event.id"
-          >
-            {{ event.title }}
-          </button>
-        </h2>
-        <div
-          [id]="'collapse' + event.id"
-          class="accordion-collapse collapse"
-          [class.show]="!collapsedStates[event.id]"
-          [attr.aria-labelledby]="'heading' + event.id"
-        >
-          <div class="accordion-body">
-            <p><strong>Date:</strong> {{ event.date }}</p>
-            <p><strong>Location:</strong> {{ event.location }}</p>
-            <p><strong>Description:</strong> {{ event.description }}</p>
-            <p>
-              <strong>Recipients:</strong>
-              <span
-                *ngFor="let recipient of event.recipients; let isLast = last"
-              >
-                {{ recipient.name }}<span *ngIf="!isLast">, </span>
-              </span>
-            </p>
 
-            <!-- Delete button for each event -->
-            <button class="btn btn-danger" (click)="deleteEvent(event.id)">
-              Delete
-            </button>
-          </div>
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search events..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        aria-label="Search events"
+      />
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        (click)="clearSearch()"
+      >
+        Clear
+      </button>
+    </div>
+
+    <div class="list-group">
+      <!-- Display the event title, update button, and delete button -->
+      <div
+        *ngFor="let event of events"
+        class="list-group-item d-flex justify-content-between align-items-center"
+      >
+        <span (click)="viewDetails(event.id)" style="cursor: pointer">
+          {{ event.title }}
+        </span>
+
+        <div>
+          <!-- Update button -->
+          <button
+            class="btn btn-warning btn-sm"
+            (click)="updateEvent(event.id)"
+          >
+            Update
+          </button>
+
+          <!-- Delete button -->
+          <button
+            class="btn btn-danger btn-sm mx-2"
+            (click)="deleteEvent(event.id)"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Search Results Template (Show only when search is active) -->
-  <ng-template #searchResults>
-    <div>
-      <h2 class="mb-3">Search Results</h2>
-      <div class="accordion" id="eventAccordion">
-        <div *ngFor="let event of events" class="accordion-item">
-          <h2 class="accordion-header" id="heading{{ event.id }}">
-            <button
-              class="accordion-button"
-              type="button"
-              [class.collapsed]="collapsedStates[event.id]"
-              (click)="toggleCollapse(event.id)"
-              [attr.aria-expanded]="!collapsedStates[event.id]"
-              [attr.aria-controls]="'collapse' + event.id"
-            >
-              {{ event.title }}
-            </button>
-          </h2>
-          <div
-            [id]="'collapse' + event.id"
-            class="accordion-collapse collapse"
-            [class.show]="!collapsedStates[event.id]"
-            [attr.aria-labelledby]="'heading' + event.id"
-          >
-            <div class="accordion-body">
-              <p><strong>Date:</strong> {{ event.date }}</p>
-              <p><strong>Description:</strong> {{ event.description }}</p>
-              <p><strong>Location:</strong> {{ event.location }}</p>
-              <p><strong>Recipients:</strong></p>
-              <div *ngFor="let recipient of event.recipients">
-                <p>{{ recipient.name }}</p>
-              </div>
-
-              <!-- Delete button for each event in search results -->
-              <button class="btn btn-danger" (click)="deleteEvent(event.id)">
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- If no search results -->
-      <p *ngIf="events.length === 0">No matching events found.</p>
+  <!-- No Events Message -->
+  <ng-template #noEvents>
+    <div class="text-center mt-5">
+      <h5 class="text-muted">No events found.</h5>
     </div>
   </ng-template>
-
-  <!-- Reference the searchResults template when isSearchActive is true -->
-  <ng-container *ngIf="isSearchActive" else noEvents>
-    <ng-container *ngTemplateOutlet="searchResults"></ng-container>
-  </ng-container>
 </div>

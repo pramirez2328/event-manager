@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { EventListComponent } from './components/event-list/event-list.component';
+import { EventDetailsComponent } from './components/event-details/event-details.component';
 import { SearchService } from './services/search.service';
 
 @Component({
@@ -14,14 +15,13 @@ import { SearchService } from './services/search.service';
     HeaderComponent,
     RouterModule,
     EventListComponent,
+    EventDetailsComponent,
     CommonModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  showCalendar: boolean = false;
-  searchQuery: string = '';
   foundEvents: Array<{
     id: string;
     title: string;
@@ -31,20 +31,5 @@ export class AppComponent {
     description: string;
   }> = [];
 
-  constructor(private router: Router, private searchService: SearchService) {}
-
-  toggleView() {
-    this.showCalendar = !this.showCalendar;
-    if (this.showCalendar) {
-      this.router.navigate(['/events/calendar']);
-    } else {
-      this.router.navigate(['/events/list']);
-    }
-  }
-
-  // Handle the search query from the header
-  onSearch(query: string) {
-    this.searchQuery = query;
-    this.foundEvents = this.searchService.searchEventByTitle(query); // Search for the event
-  }
+  constructor() {}
 }
