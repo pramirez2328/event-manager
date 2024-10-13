@@ -21,14 +21,10 @@ export class EventDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('EventDetailsComponent is initialized');
-
     const eventId = this.route.snapshot.paramMap.get('id');
-    console.log('Event ID:', eventId); // Log the event ID to check if it's retrieved
 
     if (eventId) {
       this.event = this.eventService.getEventById(eventId);
-      console.log('Fetched Event:', this.event); // Log the fetched event
     }
   }
 

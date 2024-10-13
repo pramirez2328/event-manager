@@ -1,37 +1,35 @@
 <div>
+  <div class="d-flex justify-content-between">
+    <h3 class="mb-3 text-muted">
+      {{ isSearchActive ? "Search Results" : "Event List" }}
+    </h3>
+    <h6 class="text-muted mb-4">
+      You have
+      <span class="text-primary numberOfEvents">{{
+        isSearchActive ? events.length : numberOfEvents
+      }}</span>
+      {{ isSearchActive ? "matching events" : "events" }}
+    </h6>
+  </div>
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search events..."
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange()"
+      aria-label="Search events"
+    />
+    <button
+      class="btn btn-outline-secondary"
+      type="button"
+      (click)="clearSearch()"
+    >
+      Clear
+    </button>
+  </div>
   <!-- Event List (Show either all events or search results) -->
   <div *ngIf="events.length > 0; else noEvents">
-    <div class="d-flex justify-content-between">
-      <h3 class="mb-3 text-muted">
-        {{ isSearchActive ? "Search Results" : "Event List" }}
-      </h3>
-      <h6 class="text-muted mb-4">
-        You have
-        <span class="text-primary numberOfEvents">{{
-          isSearchActive ? events.length : numberOfEvents
-        }}</span>
-        {{ isSearchActive ? "matching events" : "events" }}
-      </h6>
-    </div>
-
-    <div class="input-group mb-3">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Search events..."
-        [(ngModel)]="searchTerm"
-        (ngModelChange)="onSearchChange()"
-        aria-label="Search events"
-      />
-      <button
-        class="btn btn-outline-secondary"
-        type="button"
-        (click)="clearSearch()"
-      >
-        Clear
-      </button>
-    </div>
-
     <div class="list-group">
       <!-- Display the event title, update button, and delete button -->
       <div
