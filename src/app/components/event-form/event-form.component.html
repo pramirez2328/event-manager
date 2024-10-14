@@ -46,9 +46,20 @@
     ></textarea>
   </div>
 
-  <!-- Recipients Form Array -->
-  <label class="mb-3 form-label"> Recipient: </label>
+  <!-- Display recipients as a string if added -->
+  <div *ngIf="allRecipients.length > 0">
+    <p class="text-muted">
+      <span class="invitees">Invitees:</span>
+    </p>
+    <ul class="text-muted">
+      <li class="list-group-item" *ngFor="let recipient of allRecipients">
+        {{ recipient }}
+      </li>
+    </ul>
+  </div>
+
   <div formArrayName="recipients">
+    <label class="form-label">Add Recipient:</label>
     <div
       *ngFor="let recipient of recipients.controls; let i = index"
       [formGroupName]="i"
@@ -76,19 +87,21 @@
           />
         </div>
 
+        <!-- Button to remove recipient -->
         <button
           type="button"
-          (click)="removeRecipient(i)"
           class="btn btn-danger"
+          (click)="removeRecipient(i)"
         >
           Remove Recipient
         </button>
       </div>
     </div>
   </div>
+
   <div class="d-flex justify-content-between">
     <button type="button" (click)="addRecipient()" class="btn btn-secondary">
-      Add Another Recipient
+      Add Recipient
     </button>
 
     <button
