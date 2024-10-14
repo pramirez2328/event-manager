@@ -41,19 +41,26 @@
         *ngFor="let event of events"
         class="list-group-item d-flex justify-content-between align-items-center"
       >
-        <span (click)="viewDetails(event.id)" style="cursor: pointer">
+        <span
+          class="col-6"
+          (click)="viewDetails(event.id)"
+          style="cursor: pointer"
+        >
           {{ event.title }}
         </span>
 
-        <div>
+        <div class="col-6 col-md-4 col-xl-2 d-flex justify-content-end">
           <!-- Update button -->
-          <button class="btn btn-info btn-sm" (click)="updateEvent(event.id)">
+          <button
+            class="btn btn-info btn-sm col-5 h6"
+            (click)="updateEvent(event.id)"
+          >
             Update
           </button>
 
           <!-- Delete button -->
           <button
-            class="btn btn-danger btn-sm mx-2"
+            class="btn btn-danger btn-sm mx-2 col-5 h6"
             (click)="deleteEvent(event.id)"
           >
             Delete
