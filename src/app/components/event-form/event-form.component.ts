@@ -24,6 +24,7 @@ export class EventFormComponent implements OnInit {
   isEditMode: boolean = false;
   eventId: string | null = null;
   allRecipients: string[] = [];
+  formChanged: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -40,6 +41,14 @@ export class EventFormComponent implements OnInit {
     });
   }
 
+  originalEvent = {
+    id: '',
+    date: '',
+    description: '',
+    location: '',
+    recipients: [{ name: '', email: '' }],
+    title: '',
+  };
   ngOnInit(): void {
     emailjs.init('pr1UJGTPULYPKkq54'); // Initialize EmailJS with your public key
 
@@ -60,6 +69,15 @@ export class EventFormComponent implements OnInit {
             date: existingEvent.date,
           });
 
+          this.originalEvent = {
+            id: existingEvent.id,
+            date: existingEvent.date,
+            description: existingEvent.description,
+            location: existingEvent.location,
+            recipients: [...existingEvent.recipients],
+            title: existingEvent.title,
+          };
+
           const recipientsArray = this.eventForm.get('recipients') as FormArray;
           recipientsArray.clear(); // Clear the FormArray before re-adding
 
@@ -69,6 +87,15 @@ export class EventFormComponent implements OnInit {
         }
       }
     });
+
+    this.eventForm.valueChanges.subscribe(() => {
+      this.updateFormValidity();
+    });
+  }
+
+  updateFormValidity(): void {
+    // Set formChanged to true once any input field changes
+    this.formChanged = true;
   }
 
   // Create a new recipient form group
@@ -97,6 +124,31 @@ export class EventFormComponent implements OnInit {
   // Remove a recipient from the form array
   removeRecipient(index: number): void {
     this.recipients.removeAt(index); // Remove recipient at the given index
+  }
+
+  cancelUpdate(): void {
+    if (this.router.url.includes('calendar')) {
+      this.router.navigate(['/events/calendar']);
+    } else {
+      this.router.navigate(['/events/list']);
+    }
+  }
+
+  isFormValid(): boolean {
+    console.log('isFormValid called');
+
+    // Check if the event form itself (e.g., title, location, description) is valid
+    const isEventFormValid = this.eventForm.valid;
+
+    // Check if there is at least one recipient in the recipients FormArray
+    const hasRecipients = this.recipients.length > 0;
+
+    // Check if the first recipient form is valid (name and email)
+    const isFirstRecipientValid = hasRecipients && this.recipients.at(0).valid;
+
+    // Only enable the button if the form has been changed and is valid
+
+    return (this.formChanged && isEventFormValid) || isFirstRecipientValid;
   }
 
   onSubmit(): void {

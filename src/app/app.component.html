@@ -1,5 +1,11 @@
 <div class="main-container">
-  <app-header></app-header>
+  <app-header
+    [isDarkMode]="isDarkMode"
+    (toggleTheme)="toggleTheme()"
+    [showCalendar]="showCalendar"
+    (toggleView)="toggleView()"
+    >></app-header
+  >
   <div class="container mt-5">
     <router-outlet></router-outlet>
   </div>

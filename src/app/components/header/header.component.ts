@@ -1,22 +1,17 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  showCalendar: boolean = false;
-  constructor(private router: Router) {}
+  @Input() isDarkMode: boolean = true; // Input from the AppComponent
+  @Input() showCalendar: boolean = true; // Input from the AppComponent
 
-  toggleView() {
-    this.showCalendar = !this.showCalendar;
-    if (this.showCalendar) {
-      this.router.navigate(['/events/calendar']);
-    } else {
-      this.router.navigate(['/events/list']);
-    }
-  }
+  @Output() toggleTheme = new EventEmitter<void>(); // Emit event to AppComponent
+  @Output() toggleView = new EventEmitter<void>(); // Emit event to AppComponent
 }

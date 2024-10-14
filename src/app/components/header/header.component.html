@@ -1,9 +1,22 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3 text-light">
+<nav
+  class="navbar navbar-expand-lg"
+  [ngClass]="
+    !isDarkMode
+      ? 'navbar-dark bg-dark text-light'
+      : 'navbar-light bg-light text-dark'
+  "
+>
   <div class="container-fluid">
     <h1 class="title">Event Manager</h1>
+
     <!-- Toggle button to switch between Event List and Calendar -->
-    <button (click)="toggleView()" class="btn btn-primary">
+    <button (click)="toggleView.emit()" class="btn btn-primary me-2">
       {{ showCalendar ? "Show Event List" : "Show Calendar" }}
+    </button>
+
+    <!-- Toggle button to switch between light and dark modes -->
+    <button (click)="toggleTheme.emit()" class="btn btn-secondary">
+      {{ isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode" }}
     </button>
   </div>
 </nav>

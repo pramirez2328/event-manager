@@ -81,7 +81,9 @@ export class EventListComponent implements OnInit, OnChanges {
   }
 
   updateEvent(eventId: string): void {
-    this.router.navigate(['/events/form'], { queryParams: { id: eventId } });
+    this.router.navigate(['/events/list/form'], {
+      queryParams: { id: eventId },
+    });
   }
 
   clearSearch(): void {

@@ -48,7 +48,7 @@
 
   <!-- Display recipients as a string if added -->
   <div *ngIf="allRecipients.length > 0">
-    <p class="text-muted">
+    <p class="text-muted m-0">
       <span class="invitees">Invitees:</span>
     </p>
     <ul class="text-muted">
@@ -59,12 +59,12 @@
   </div>
 
   <div formArrayName="recipients">
-    <label class="form-label">Add Recipient:</label>
     <div
       *ngFor="let recipient of recipients.controls; let i = index"
       [formGroupName]="i"
     >
       <div class="recipient">
+        <label class="form-label">Recipient:</label>
         <div class="mb-3">
           <label for="name-{{ i }}" class="form-label">Name:</label>
           <input
@@ -99,17 +99,25 @@
     </div>
   </div>
 
-  <div class="d-flex justify-content-between">
-    <button type="button" (click)="addRecipient()" class="btn btn-secondary">
+  <div
+    class="d-flex justify-content-between mt-5 border border-primary rounded p-3"
+  >
+    <button type="button" (click)="addRecipient()" class="btn btn-success">
       Add Recipient
     </button>
+    <div>
+      <button
+        *ngIf="isEditMode"
+        type="button"
+        (click)="cancelUpdate()"
+        class="btn btn-secondary me-3"
+      >
+        Cancel
+      </button>
 
-    <button
-      type="submit"
-      [disabled]="eventForm.invalid"
-      class="btn btn-primary"
-    >
-      Send Invitations
-    </button>
+      <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()">
+        Send Invitations
+      </button>
+    </div>
   </div>
 </form>

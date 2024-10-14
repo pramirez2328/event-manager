@@ -24,3 +24,8 @@ app-footer {
   text-align: center;
   padding: 10px;
 }
+
+.dark-mode {
+  background-color: #333;
+  color: white;
+}

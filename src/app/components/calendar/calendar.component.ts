@@ -57,7 +57,7 @@ export class CalendarComponent implements OnInit {
 
   // Method to handle date clicks (create a new event)
   handleDateClick(arg: any): void {
-    this.router.navigate(['/events/form'], {
+    this.router.navigate(['/events/calendar/form'], {
       queryParams: { date: arg.dateStr },
     });
   }
@@ -67,7 +67,7 @@ export class CalendarComponent implements OnInit {
     const eventId = info.event.id;
 
     // Pass the event details as query parameters to the form for editing
-    this.router.navigate(['/events/form'], {
+    this.router.navigate(['/events/calendar/form'], {
       queryParams: { id: eventId }, // Ensure the id is passed
     });
   }
