@@ -7,6 +7,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DarkModeService } from '../../services/darkMode.service';
 
 @Component({
   selector: 'app-calendar',
@@ -18,6 +19,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CalendarComponent implements OnInit {
   selectedDate: string = '';
+  isDarkMode: boolean = false;
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin],
     initialView: 'dayGridMonth',
@@ -31,10 +33,17 @@ export class CalendarComponent implements OnInit {
     eventClick: this.handleEventClick.bind(this), // Add eventClick handler
   };
 
-  constructor(private router: Router, private eventService: EventService) {}
+  constructor(
+    private router: Router,
+    private eventService: EventService,
+    private darkModeService: DarkModeService
+  ) {}
 
   ngOnInit(): void {
     this.loadEvents(); // Load the events when the component initializes
+    this.darkModeService.isDarkMode$.subscribe((isDarkMode) => {
+      this.isDarkMode = isDarkMode;
+    });
   }
 
   // Method to load events from the EventService and update the calendar

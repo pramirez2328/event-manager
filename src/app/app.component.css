@@ -19,13 +19,7 @@ body {
   flex: 1;
 }
 
-app-footer {
-  background-color: #f8f9fa;
-  text-align: center;
-  padding: 10px;
-}
-
 .dark-mode {
-  background-color: #333;
+  background-color: #000000;
   color: white;
 }

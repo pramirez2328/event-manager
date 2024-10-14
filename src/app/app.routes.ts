@@ -9,7 +9,10 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 export const routes: Routes = [
   { path: '', redirectTo: '/events', pathMatch: 'full' },
   { path: 'events', component: EventListComponent }, // Add this to handle `/events`
-  { path: 'events/list', component: EventListComponent },
+  {
+    path: 'events/list',
+    component: EventListComponent,
+  },
   { path: 'events/list/form', component: EventFormComponent },
   { path: 'events/list/:id', component: EventDetailsComponent },
   { path: 'events/calendar', component: CalendarComponent },

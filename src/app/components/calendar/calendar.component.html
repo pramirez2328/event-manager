@@ -1,7 +1,9 @@
-<full-calendar [options]="calendarOptions"></full-calendar>
+<div [ngClass]="{ 'dark-mode': isDarkMode }" class="mb-4">
+  <full-calendar [options]="calendarOptions"></full-calendar>
 
-<!-- Display the event form when a date is clicked -->
-<app-event-form
-  *ngIf="selectedDate"
-  [selectedDate]="selectedDate"
-></app-event-form>
+  <!-- Display the event form when a date is clicked -->
+  <app-event-form
+    *ngIf="selectedDate"
+    [selectedDate]="selectedDate"
+  ></app-event-form>
+</div>

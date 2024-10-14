@@ -5,6 +5,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { EventListComponent } from './components/event-list/event-list.component';
 import { EventDetailsComponent } from './components/event-details/event-details.component';
+import { DarkModeService } from './services/darkMode.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,7 @@ import { EventDetailsComponent } from './components/event-details/event-details.
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  isDarkMode: boolean = true; // Manage the light/dark mode state
+  isDarkMode: boolean = false; // Manage the light/dark mode state
   showCalendar: boolean = false;
 
   foundEvents: Array<{
@@ -33,7 +34,10 @@ export class AppComponent {
     description: string;
   }> = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private darkModeService: DarkModeService
+  ) {}
 
   toggleView() {
     this.showCalendar = !this.showCalendar;
@@ -47,6 +51,8 @@ export class AppComponent {
   // Method to toggle between Light and Dark modes
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
+    this.darkModeService.setDarkMode(this.isDarkMode);
+
     const mainContainer =
       document.querySelector<HTMLElement>('.main-container');
     if (mainContainer) {

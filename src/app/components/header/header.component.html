@@ -1,33 +1,31 @@
-<nav
-  class="navbar navbar-expand-lg"
-  [ngClass]="
-    !isDarkMode
-      ? 'navbar-dark bg-dark text-light'
-      : 'navbar-light bg-light text-dark'
-  "
->
-  <div class="container-fluid">
-    <!-- Toggle button to switch between Event List and Calendar -->
-    <button (click)="toggleView.emit()" class="btn btn-primary me-2">
-      {{ showCalendar ? "Show Event List" : "Show Calendar" }}
-    </button>
+<div class="{{ isDarkMode ? 'dark-mode' : 'light-mode' }}">
+  <nav
+    class="navbar navbar-expand-lg p-3"
+    [ngClass]="isDarkMode ? 'navbar text-light' : 'navbar text-dark'"
+  >
+    <div class="container-fluid">
+      <!-- Toggle button to switch between Event List and Calendar -->
+      <button (click)="toggleView.emit()" class="togle-view-button">
+        {{ showCalendar ? "Event List" : "Calendar" }}
+      </button>
 
-    <h1 class="title">Event Manager</h1>
-    <div class="view-mode-container">
-      <img
-        class="view-mode-icon me-3"
-        src="{{ !isDarkMode ? 'assets/sun.png' : 'assets/moon.png' }}"
-        alt="view mode icon"
-      />
-      <div class="form-check form-switch">
-        <input
-          (click)="toggleTheme.emit()"
-          class="form-check-input"
-          type="checkbox"
-          role="switch"
-          id="flexSwitchCheckDefault"
+      <h1 class="title">Event Manager</h1>
+      <div class="view-mode-container">
+        <img
+          class="view-mode-icon me-3"
+          src="{{ isDarkMode ? 'assets/sun.png' : 'assets/moon.png' }}"
+          alt="view mode icon"
         />
+        <div class="form-check form-switch">
+          <input
+            (click)="toggleTheme.emit()"
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+          />
+        </div>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</div>

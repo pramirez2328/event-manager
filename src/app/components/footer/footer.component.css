@@ -2,8 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
+  padding: 20px 20px;
   margin: 0;
+  background-color: rgba(0, 225, 255, 0.117);
+  border-top: 1px solid #ffffff;
 }
 
 .footer > h6 {
@@ -20,4 +22,13 @@
   font-family: cursive;
   font-weight: bold;
   font-size: 0.7rem;
+}
+
+.dark-mode {
+  color: #ffffff;
+  background-color: #000000;
+}
+
+.light-mode {
+  color: #000000;
 }

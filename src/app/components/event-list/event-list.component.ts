@@ -11,6 +11,7 @@ import { SearchService } from '../../services/search.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { DarkModeService } from '../../services/darkMode.service';
 
 @Component({
   selector: 'app-event-list',
@@ -21,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class EventListComponent implements OnInit, OnChanges {
   @Input() searchTerm: string = ''; // Search term passed from parent
+  isDarkMode: boolean = false; // Default value
   events: Array<{
     id: string;
     title: string;
@@ -36,6 +38,7 @@ export class EventListComponent implements OnInit, OnChanges {
   constructor(
     private eventService: EventService,
     private searchService: SearchService,
+    private darkModeService: DarkModeService,
     private router: Router, // Inject Router to navigate programmatically
     private route: ActivatedRoute
   ) {}
@@ -47,6 +50,10 @@ export class EventListComponent implements OnInit, OnChanges {
       if (this.searchTerm && this.searchTerm.trim().length >= 3) {
         this.searchEvents(); // Trigger the search immediately if query param exists
       }
+    });
+
+    this.darkModeService.isDarkMode$.subscribe((isDarkMode) => {
+      this.isDarkMode = isDarkMode;
     });
   }
 

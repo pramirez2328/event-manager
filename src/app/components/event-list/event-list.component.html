@@ -1,13 +1,16 @@
 <div>
   <div class="d-flex justify-content-between">
-    <h3 class="mb-3 text-muted">
-      {{ isSearchActive ? "Search Results" : "Event List" }}
+    <h3 class="mb-3 {{ isDarkMode ? 'dark-mode' : 'light-mode' }}">
+      {{ isSearchActive ? "Results" : "Event List" }}
     </h3>
-    <h6 class="text-muted mb-4">
+    <h6 class="mb-4 {{ isDarkMode ? 'dark-mode' : 'light-mode' }}">
       You have
-      <span class="text-primary numberOfEvents">{{
-        isSearchActive ? events.length : numberOfEvents
-      }}</span>
+      <span
+        class="{{
+          isDarkMode ? 'text-warning' : 'text-primary'
+        }} numberOfEvents"
+        >{{ isSearchActive ? events.length : numberOfEvents }}</span
+      >
       {{ isSearchActive ? "matching events" : "events" }}
     </h6>
   </div>
@@ -21,7 +24,9 @@
       aria-label="Search events"
     />
     <button
-      class="btn btn-outline-secondary"
+      class="btn btn-outline-secondary  {{
+        isDarkMode ? 'dark-mode' : 'light-mode'
+      }}"
       type="button"
       (click)="clearSearch()"
     >
@@ -42,10 +47,7 @@
 
         <div>
           <!-- Update button -->
-          <button
-            class="btn btn-warning btn-sm"
-            (click)="updateEvent(event.id)"
-          >
+          <button class="btn btn-info btn-sm" (click)="updateEvent(event.id)">
             Update
           </button>
 

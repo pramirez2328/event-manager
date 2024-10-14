@@ -1,7 +1,13 @@
+.dark-mode ::ng-deep .fc-toolbar-title {
+  color: #ffffff; /* White text for dark mode */
+}
+
+.dark-mode ::ng-deep .fc-scrollgrid-section-body {
+  cursor: pointer;
+}
+
 ::ng-deep .fc-toolbar-title {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #000000;
+  color: #000000; /* Default light mode */
 }
 
 ::ng-deep .fc-scrollgrid-section-body {
