@@ -43,6 +43,7 @@ export class EventService {
     }
 
     const event = this.events.find((event) => event.id === id);
+
     return event;
   }
 
@@ -86,11 +87,9 @@ export class EventService {
   ) {
     const eventIndex = this.events.findIndex((event) => event.id === id);
     if (eventIndex !== -1) {
-      const existingRecipints = this.events[eventIndex].recipients;
       this.events[eventIndex] = {
         ...this.events[eventIndex],
         ...updatedEvent,
-        recipients: existingRecipints,
       };
 
       this.saveEventsToStorage(); // Save updated events to localStorage

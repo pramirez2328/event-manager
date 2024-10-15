@@ -42,14 +42,6 @@ export class EventFormComponent implements OnInit {
     });
   }
 
-  originalEvent = {
-    id: '',
-    date: '',
-    description: '',
-    location: '',
-    recipients: [{ name: '', email: '' }],
-    title: '',
-  };
   ngOnInit(): void {
     emailjs.init(environment.emailJsPublicKey); // Initialize EmailJS with your public key
 
@@ -69,15 +61,6 @@ export class EventFormComponent implements OnInit {
             description: existingEvent.description,
             date: existingEvent.date,
           });
-
-          this.originalEvent = {
-            id: existingEvent.id,
-            date: existingEvent.date,
-            description: existingEvent.description,
-            location: existingEvent.location,
-            recipients: [...existingEvent.recipients],
-            title: existingEvent.title,
-          };
 
           const recipientsArray = this.eventForm.get('recipients') as FormArray;
           recipientsArray.clear(); // Clear the FormArray before re-adding
@@ -116,10 +99,6 @@ export class EventFormComponent implements OnInit {
   addRecipient(): void {
     const recipientFormArray = this.recipients;
     recipientFormArray.push(this.createRecipientForm()); // Add new recipient form group
-    console.log(
-      'Added new recipient form. Current recipients:',
-      recipientFormArray.value
-    );
   }
 
   // Remove a recipient from the form array
@@ -148,20 +127,14 @@ export class EventFormComponent implements OnInit {
   // Update an existing event
   updateEvent(formData: any): void {
     this.eventService.updateEvent(this.eventId ?? '', formData);
-    this.sendInvitations(this.allRecipients, formData, true);
+    this.sendInvitations(formData);
   }
 
   // Send email to recipients
-  sendInvitations(
-    recipients: any[],
-    formData: any,
-    isEditMode: boolean = false
-  ): void {
-    console.log('Sending invitations to:', recipients);
-    recipients.forEach((recipient: any) => {
-      const { name, email } = isEditMode
-        ? this.parseRecipient(recipient)
-        : recipient;
+  sendInvitations(formData: any): void {
+    console.log('Sending invitations to:', formData.recipients);
+    formData.recipients.forEach((recipient: any) => {
+      const { name, email } = recipient;
       const emailParams = this.buildEmailParams(name, email, formData);
 
       emailjs
@@ -183,12 +156,6 @@ export class EventFormComponent implements OnInit {
     });
   }
 
-  // Parse recipient string into name and email
-  parseRecipient(recipient: string): { name: string; email: string } {
-    const [name, email] = recipient.split(' (');
-    return { name, email: email.slice(0, -1) };
-  }
-
   // Build email parameters
   buildEmailParams(to_name: string, to_email: string, formData: any): any {
     return {
@@ -207,6 +174,10 @@ export class EventFormComponent implements OnInit {
 
     const formData = this.eventForm.value;
 
+    const existingRecipients =
+      this.eventService.getEventById(this.eventId)?.recipients || [];
+    formData.recipients = [...existingRecipients, ...formData.recipients];
+
     // If in edit mode, update the existing event
     if (this.isEditMode && this.eventId) {
       this.updateEvent(formData);
@@ -216,7 +187,7 @@ export class EventFormComponent implements OnInit {
         ...formData,
       };
       this.eventService.addEvent(newEvent);
-      this.sendInvitations(newEvent.recipients, formData);
+      this.sendInvitations(newEvent);
     }
 
     // Navigate back to the calendar

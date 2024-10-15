@@ -48,10 +48,8 @@
 
   <!-- Display recipients as a string if added -->
   <div *ngIf="allRecipients.length > 0">
-    <p class="text-muted m-0">
-      <span class="invitees">Invitees:</span>
-    </p>
-    <ul class="text-muted">
+    <label class="form-label m-0"> Invitees: </label>
+    <ul>
       <li class="list-group-item" *ngFor="let recipient of allRecipients">
         {{ recipient }}
       </li>

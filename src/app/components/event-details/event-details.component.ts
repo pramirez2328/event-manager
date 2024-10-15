@@ -36,7 +36,6 @@ export class EventDetailsComponent implements OnInit {
   }
 
   backToEvents() {
-    console.log('Navigating back to events list');
     // Navigate back to the events list
     this.router.navigate(['/events/list']);
   }

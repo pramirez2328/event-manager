@@ -14,9 +14,9 @@
   cursor: pointer;
 }
 
-.form-floating > label,
-.form-floating ~ label {
-  font-size: 1.1rem;
-  font-weight: 900;
-  color: black;
+@media screen and (max-width: 768px) {
+  ::ng-deep .fc .fc-header-toolbar.fc-toolbar {
+    flex-direction: column !important;
+    gap: 1rem;
+  }
 }
