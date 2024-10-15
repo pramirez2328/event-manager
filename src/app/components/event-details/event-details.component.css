@@ -1,18 +1,25 @@
 h2 {
-  font-size: 2rem;
+  font-size: 1.7rem;
   margin-bottom: 1rem;
 }
 
 p {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 ul {
-  list-style-type: none;
+  list-style-type: disc;
   padding: 0;
 }
 
 li {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
+  margin-left: 2rem;
+}
+
+.event {
+  border: 1px solid #dee2e6;
+  padding: 1.5rem;
+  border-radius: 7px;
 }

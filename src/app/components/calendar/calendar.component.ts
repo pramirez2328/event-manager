@@ -29,7 +29,7 @@ export class CalendarComponent implements OnInit {
       right: 'dayGridMonth,dayGridWeek,dayGridDay',
     },
     events: [], // Initialize with an empty array
-    dateClick: this.handleDateClick.bind(this),
+    dateClick: this.handleDateClick.bind(this), // Add dateClick handler
     eventClick: this.handleEventClick.bind(this), // Add eventClick handler
   };
 
@@ -40,7 +40,7 @@ export class CalendarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadEvents(); // Load the events when the component initializes
+    this.loadEvents();
     this.darkModeService.isDarkMode$.subscribe((isDarkMode) => {
       this.isDarkMode = isDarkMode;
     });
@@ -54,7 +54,7 @@ export class CalendarComponent implements OnInit {
     const mappedEvents = allEvents.map((event) => ({
       id: event.id,
       title: event.title,
-      date: event.date, // Assuming `date` is in YYYY-MM-DD format
+      date: event.date,
     }));
 
     // Update calendarOptions with new events
@@ -77,7 +77,7 @@ export class CalendarComponent implements OnInit {
 
     // Pass the event details as query parameters to the form for editing
     this.router.navigate(['/events/calendar/form'], {
-      queryParams: { id: eventId }, // Ensure the id is passed
+      queryParams: { id: eventId },
     });
   }
 }

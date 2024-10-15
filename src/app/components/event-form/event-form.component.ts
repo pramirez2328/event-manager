@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EventService } from '../../services/event.service';
 import { generateUniqueId } from '../../../util/generateUniqueId';
+import { environment } from '../../../environments/environment';
 import * as emailjs from '@emailjs/browser';
 
 @Component({
@@ -50,7 +51,7 @@ export class EventFormComponent implements OnInit {
     title: '',
   };
   ngOnInit(): void {
-    emailjs.init('pr1UJGTPULYPKkq54'); // Initialize EmailJS with your public key
+    emailjs.init(environment.emailJsPublicKey); // Initialize EmailJS with your public key
 
     this.route.queryParams.subscribe((params) => {
       if (params['date']) {
@@ -126,6 +127,7 @@ export class EventFormComponent implements OnInit {
     this.recipients.removeAt(index); // Remove recipient at the given index
   }
 
+  // Cancel the update and navigate back to the list or calendar view
   cancelUpdate(): void {
     if (this.router.url.includes('calendar')) {
       this.router.navigate(['/events/calendar']);
@@ -134,65 +136,90 @@ export class EventFormComponent implements OnInit {
     }
   }
 
+  // Check if the form is valid
   isFormValid(): boolean {
-    console.log('isFormValid called');
-
-    // Check if the event form itself (e.g., title, location, description) is valid
     const isEventFormValid = this.eventForm.valid;
-
-    // Check if there is at least one recipient in the recipients FormArray
     const hasRecipients = this.recipients.length > 0;
-
-    // Check if the first recipient form is valid (name and email)
     const isFirstRecipientValid = hasRecipients && this.recipients.at(0).valid;
-
-    // Only enable the button if the form has been changed and is valid
 
     return (this.formChanged && isEventFormValid) || isFirstRecipientValid;
   }
 
+  // Update an existing event
+  updateEvent(formData: any): void {
+    this.eventService.updateEvent(this.eventId ?? '', formData);
+    this.sendInvitations(this.allRecipients, formData, true);
+  }
+
+  // Send email to recipients
+  sendInvitations(
+    recipients: any[],
+    formData: any,
+    isEditMode: boolean = false
+  ): void {
+    console.log('Sending invitations to:', recipients);
+    recipients.forEach((recipient: any) => {
+      const { name, email } = isEditMode
+        ? this.parseRecipient(recipient)
+        : recipient;
+      const emailParams = this.buildEmailParams(name, email, formData);
+
+      emailjs
+        .send(
+          environment.emailJsServiceId,
+          environment.emailJsTemplateId,
+          emailParams
+        )
+        .then((response) => {
+          console.log(
+            'Invitations were sent! --->',
+            response.status,
+            response.text
+          );
+        })
+        .catch((error) => {
+          console.error('FAILED!...', error);
+        });
+    });
+  }
+
+  // Parse recipient string into name and email
+  parseRecipient(recipient: string): { name: string; email: string } {
+    const [name, email] = recipient.split(' (');
+    return { name, email: email.slice(0, -1) };
+  }
+
+  // Build email parameters
+  buildEmailParams(to_name: string, to_email: string, formData: any): any {
+    return {
+      to_name,
+      to_email,
+      from_name: 'Event Manager',
+      event_title: formData.title,
+      location: formData.location,
+      message: formData.description,
+    };
+  }
+
+  // form submission
   onSubmit(): void {
-    if (this.eventForm.valid) {
-      const formData = this.eventForm.value;
+    if (this.eventForm.invalid) return;
 
-      if (this.isEditMode && this.eventId) {
-        this.eventService.updateEvent(this.eventId, formData);
-      } else {
-        const newEvent = {
-          id: generateUniqueId(),
-          ...formData,
-        };
-        this.eventService.addEvent(newEvent);
-      }
+    const formData = this.eventForm.value;
 
-      // Send email to all recipients
-      this.allRecipients.forEach((recipient) => {
-        const [name, email] = recipient.split(' (');
-        const emailParams = {
-          to_name: name,
-          to_email: email.slice(0, -1), // Remove trailing ')'
-          from_name: 'Event Manager',
-          event_title: formData.title,
-          location: formData.location,
-          message: formData.description,
-        };
-
-        emailjs
-          .send('service_08bd9yl', 'template_vwnfl19', emailParams)
-          .then((response) => {
-            console.log(
-              'Invitations were sent! --->',
-              response.status,
-              response.text
-            );
-          })
-          .catch((error) => {
-            console.error('FAILED!...', error);
-          });
-      });
-
-      // Navigate back to the calendar
-      this.router.navigate(['/events/calendar']);
+    // If in edit mode, update the existing event
+    if (this.isEditMode && this.eventId) {
+      this.updateEvent(formData);
+    } else {
+      const newEvent = {
+        id: generateUniqueId(),
+        ...formData,
+      };
+      this.eventService.addEvent(newEvent);
+      this.sendInvitations(newEvent.recipients, formData);
     }
+
+    // Navigate back to the calendar
+    this.router.navigate(['/events/calendar']);
   }
 }

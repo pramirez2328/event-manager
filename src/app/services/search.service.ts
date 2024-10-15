@@ -8,11 +8,12 @@ export class SearchService {
   private searchQuerySource = new BehaviorSubject<string>('');
   currentSearchQuery = this.searchQuerySource.asObservable();
 
+  // Method to update the search query
   updateSearchQuery(query: string) {
-    console.log('Search query:', query);
     this.searchQuerySource.next(query);
   }
 
+  // Method to search for events by title
   searchEventByTitle(title: string): any {
     const events = JSON.parse(localStorage.getItem('EXISTING_EVENTS') || '[]');
 

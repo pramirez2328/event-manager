@@ -7,17 +7,17 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-event-details',
   standalone: true,
-  imports: [CommonModule], // Ensure CommonModule is imported for ngIf, ngFor, etc.
+  imports: [CommonModule],
   templateUrl: './event-details.component.html',
   styleUrls: ['./event-details.component.css'],
 })
 export class EventDetailsComponent implements OnInit {
-  event: any; // This will hold the fetched event
+  event: any; // Define a property to hold the event details
 
   constructor(
-    private route: ActivatedRoute, // To access route parameters
-    private router: Router, // To navigate programmatically
-    private eventService: EventService // To fetch event data
+    private route: ActivatedRoute,
+    private router: Router,
+    private eventService: EventService
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +26,13 @@ export class EventDetailsComponent implements OnInit {
     if (eventId) {
       this.event = this.eventService.getEventById(eventId);
     }
+  }
+
+  // link to Google Maps with the location
+  getGoogleMapsLink(location: string): string {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      location
+    )}`;
   }
 
   backToEvents() {

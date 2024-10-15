@@ -9,9 +9,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  @Input() isDarkMode: boolean = true; // Input from the AppComponent
-  @Input() showCalendar: boolean = true; // Input from the AppComponent
+  @Input() isDarkMode: boolean = true;
+  @Input() showCalendar: boolean = true;
 
-  @Output() toggleTheme = new EventEmitter<void>(); // Emit event to AppComponent
-  @Output() toggleView = new EventEmitter<void>(); // Emit event to AppComponent
+  // Event emitters to toggle between Light and Dark modes and Calendar and List views
+  @Output() toggleTheme = new EventEmitter<void>();
+  @Output() toggleView = new EventEmitter<void>();
 }

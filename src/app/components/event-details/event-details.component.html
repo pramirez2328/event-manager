@@ -1,10 +1,19 @@
-<div *ngIf="event">
+<div *ngIf="event" class="event">
   <h2>{{ event.title }}</h2>
   <p><strong>Date:</strong> {{ event.date }}</p>
-  <p><strong>Location:</strong> {{ event.location }}</p>
+  <p>
+    <strong>Location:</strong>
+    <a
+      [href]="getGoogleMapsLink(event.location)"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {{ event.location }}
+    </a>
+  </p>
   <p><strong>Description:</strong> {{ event.description }}</p>
 
-  <h4>Recipients:</h4>
+  <p><strong>Recipients:</strong></p>
   <ul>
     <li *ngFor="let recipient of event.recipients">
       {{ recipient.name }} ({{ recipient.email }})

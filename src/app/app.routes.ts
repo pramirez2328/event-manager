@@ -7,17 +7,14 @@ import { EventDetailsComponent } from './components/event-details/event-details.
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/events', pathMatch: 'full' },
-  { path: 'events', component: EventListComponent }, // Add this to handle `/events`
-  {
-    path: 'events/list',
-    component: EventListComponent,
-  },
-  { path: 'events/list/form', component: EventFormComponent },
-  { path: 'events/list/:id', component: EventDetailsComponent },
-  { path: 'events/calendar', component: CalendarComponent },
-  { path: 'events/calendar/form', component: EventFormComponent },
-  { path: '**', component: NotFoundComponent },
+  { path: '', redirectTo: '/events', pathMatch: 'full' }, // Redirect to /events
+  { path: 'events', component: EventListComponent }, // Display the list of events
+  { path: 'events/list', component: EventListComponent }, // Display the list of events
+  { path: 'events/list/form', component: EventFormComponent }, // Display the form to add a new event
+  { path: 'events/list/:id', component: EventDetailsComponent }, // Display the details of a specific event
+  { path: 'events/calendar', component: CalendarComponent }, // Display the calendar view
+  { path: 'events/calendar/form', component: EventFormComponent }, // Display the form to add a new event
+  { path: '**', component: NotFoundComponent }, // Display the 404 page
 ];
 
 @NgModule({

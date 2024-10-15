@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EVENTS as preloadedEvents } from '../../../src/util/events'; // Static events
+import { EVENTS as preloadedEvents } from '../../../src/util/events'; // Import preloaded events
 
 @Injectable({
   providedIn: 'root',
@@ -36,13 +36,13 @@ export class EventService {
     localStorage.setItem(this.eventsKey, JSON.stringify(this.events));
   }
 
+  // Get an event by ID
   getEventById(id: string | null) {
     if (!id) {
       return null;
     }
 
     const event = this.events.find((event) => event.id === id);
-    console.log('Event found:', event); // Log the found event or undefined
     return event;
   }
 
@@ -86,7 +86,13 @@ export class EventService {
   ) {
     const eventIndex = this.events.findIndex((event) => event.id === id);
     if (eventIndex !== -1) {
-      this.events[eventIndex] = { ...this.events[eventIndex], ...updatedEvent };
+      const existingRecipints = this.events[eventIndex].recipients;
+      this.events[eventIndex] = {
+        ...this.events[eventIndex],
+        ...updatedEvent,
+        recipients: existingRecipints,
+      };
+
       this.saveEventsToStorage(); // Save updated events to localStorage
     }
   }
@@ -107,6 +113,6 @@ export class EventService {
 
   // Generate a unique ID for events
   private generateUniqueId(): string {
-    return Math.random().toString(36).substr(2, 9);
+    return Math.random().toString(36).substring(2, 11);
   }
 }

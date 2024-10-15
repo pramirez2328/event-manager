@@ -57,12 +57,14 @@ export class EventListComponent implements OnInit, OnChanges {
     });
   }
 
+  // Implement the ngOnChanges lifecycle hook
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['searchTerm']) {
       this.handleSearchTerm();
     }
   }
 
+  // searchEvents and clearSearch methods
   handleSearchTerm(): void {
     if (this.searchTerm && this.searchTerm.trim().length >= 3) {
       this.searchEvents(); // Trigger search if the term is 3 or more characters
@@ -103,7 +105,6 @@ export class EventListComponent implements OnInit, OnChanges {
     this.router.navigate(['/events/list/', eventId]);
   }
 
-  // Add the missing onSearchChange method
   onSearchChange(): void {
     this.handleSearchTerm(); // Trigger search logic whenever the search term changes
   }

@@ -22,7 +22,7 @@ import { DarkModeService } from './services/darkMode.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  isDarkMode: boolean = false; // Manage the light/dark mode state
+  isDarkMode: boolean = false;
   showCalendar: boolean = false;
 
   foundEvents: Array<{
@@ -39,6 +39,7 @@ export class AppComponent {
     private darkModeService: DarkModeService
   ) {}
 
+  // Method to toggle between Calendar and List views
   toggleView() {
     this.showCalendar = !this.showCalendar;
     if (this.showCalendar) {

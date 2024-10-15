@@ -4,6 +4,11 @@
   border: 1px solid #dee2e6;
   border-radius: 0.25rem;
   margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+  background-color: #e9eaea;
 }
 
 .numberOfEvents {
