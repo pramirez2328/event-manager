@@ -23,3 +23,15 @@ li {
   padding: 1.5rem;
   border-radius: 7px;
 }
+
+#map {
+  height: 400px;
+  width: 100%;
+}
+
+div[marker-content] {
+  width: 24px;
+  height: 24px;
+  background-color: red;
+  border-radius: 50%;
+}

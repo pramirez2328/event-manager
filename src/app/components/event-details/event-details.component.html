@@ -20,7 +20,12 @@
     </li>
   </ul>
 
-  <button class="btn btn-primary" (click)="backToEvents()">
+  <!-- Google Map Container -->
+  <div *ngIf="lat && lng" class="map-container">
+    <div id="map" style="height: 400px; width: 100%"></div>
+  </div>
+
+  <button class="btn btn-primary mt-4" (click)="backToEvents()">
     Back to Events
   </button>
 </div>
