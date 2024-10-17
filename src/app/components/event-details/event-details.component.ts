@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '@environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { EventService } from '../../services/event.service';
 import { Router } from '@angular/router';
