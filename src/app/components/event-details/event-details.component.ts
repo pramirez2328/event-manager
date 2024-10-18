@@ -33,7 +33,7 @@ export class EventDetailsComponent implements OnInit, AfterViewInit {
     if (this.eventId) {
       this.event = this.eventService.getEventById(this.eventId);
       if (this.event?.location) {
-        this.getPlaceLocation(this.event.location); // Fetch latitude and longitude based on location
+        this.getPlaceLocation(this.event.location);
       }
     }
   }
