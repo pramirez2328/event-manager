@@ -10,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EventService } from '../../services/event.service';
 import { generateUniqueId } from '../../../util/generateUniqueId';
-import { environment } from '@environments/environment';
+import { environment } from '../../../environments/environment';
 import * as emailjs from '@emailjs/browser';
 
 @Component({

@@ -6,7 +6,7 @@ import { importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { provideHttpClient } from '@angular/common/http';
-import { environment } from '@environments/environment';
+import { environment } from './environments/environment';
 
 // Function to dynamically load the Google Maps API script
 function loadGoogleMapsApi(): Promise<void> {
